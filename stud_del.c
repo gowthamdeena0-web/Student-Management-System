@@ -1,101 +1,146 @@
 #include "student.h"
 
-void stud_del(ST **hptr) {
-    if (*hptr == NULL) {
-        printf("No records to delete...\n");
+void stud_del(ST **hptr)
+{
+    if(*hptr == NULL)
+    {
+        printf("No Records Available...\n");
         return;
     }
 
     int roll;
     char choice;
 
-    printf("\n=============================\n");
-    printf("       DELETE RECORD MENU\n");
-    printf("=============================\n");
-    printf("R/r : Delete using Roll Number\n");
-    printf("N/n : Delete using Name\n");
-    printf("B/b : Back to Main Menu\n");
-    printf("=============================\n");
-    printf("Enter Your Choice: ");
-    scanf(" %c", &choice);
+    printf("\n====================================\n");
+    printf("        DELETE RECORD MENU\n");
+    printf("====================================\n");
+    printf("R/r : Delete Using Roll Number\n");
+    printf("N/n : Delete Using Name\n");
+    printf("B/b : Back To Main Menu\n");
+    printf("====================================\n");
 
-    if (choice == 'R' || choice == 'r') {
-        printf("Enter Roll Number to delete: ");
-        scanf("%d", &roll);
+    printf("Enter Your Choice : ");
+    scanf(" %c",&choice);
 
-        ST *temp = *hptr, *prev = NULL;
-        while (temp != NULL && temp->roll != roll) {
-            prev = temp;
-            temp = temp->next;
+    if(choice=='R' || choice=='r')
+    {
+        ST *temp=*hptr,*prev=NULL;
+
+        printf("Enter Roll Number To Delete : ");
+        scanf("%d",&roll);
+
+        while(temp)
+        {
+            if(temp->roll==roll)
+            {
+                printf("\nRecord Found\n");
+                printf("Roll No    : %d\n",temp->roll);
+                printf("Name       : %s\n",temp->name);
+                printf("Percentage : %.2f\n",temp->percentage);
+
+                printf("\nDelete This Record(Y/N) : ");
+                scanf(" %c",&choice);
+
+                if(choice=='Y' || choice=='y')
+                {
+                    if(prev==NULL)
+                        *hptr=temp->next;
+                    else
+                        prev->next=temp->next;
+
+                    free(temp);
+
+                    printf("Record Deleted Successfully...\n");
+                }
+
+                return;
+            }
+
+            prev=temp;
+            temp=temp->next;
         }
 
-        if (temp == NULL) {
-            printf("Record not found!\n");
+        printf("Record Not Found...\n");
+    }
+
+    else if(choice=='N' || choice=='n')
+    {
+        char name[50];
+        int found=0;
+
+        printf("Enter Name To Delete : ");
+        scanf("%s",name);
+
+        ST *temp=*hptr;
+
+        printf("\nMatching Records\n");
+        printf("====================================================\n");
+        printf("Roll No\t\tName\t\tPercentage\n");
+        printf("====================================================\n");
+
+        while(temp)
+        {
+            if(strcmp(temp->name,name)==0)
+            {
+                printf("%d\t\t%s\t\t%.2f\n",
+                       temp->roll,
+                       temp->name,
+                       temp->percentage);
+
+                found=1;
+            }
+
+            temp=temp->next;
+        }
+
+        if(found==0)
+        {
+            printf("No Matching Records Found...\n");
             return;
         }
 
-        // confirmation
-        printf("Record Found: Roll=%d, Name=%s, Percentage=%.2f\n",
-               temp->roll, temp->name, temp->percentage);
-        printf("Do you really want to delete? (Y/N): ");
-        scanf(" %c", &choice);
+        printf("\nEnter Roll Number To Delete : ");
+        scanf("%d",&roll);
 
-        if (choice == 'Y' || choice == 'y') {
-            if (prev == NULL) {
-                *hptr = temp->next; // deleting head
-            } else {
-                prev->next = temp->next;
-            }
-            free(temp);
-            printf("Record deleted successfully!\n");
-        } else {
-            printf("Deletion cancelled.\n");
-        }
-    }
-    else if (choice == 'N' || choice == 'n') {
-        char name[50];
-        printf("Enter Name to delete: ");
-        scanf("%s", name);
+        temp=*hptr;
+        ST *prev=NULL;
 
-        ST *temp = *hptr, *prev = NULL;
-        int found = 0;
+        while(temp)
+        {
+            if(temp->roll==roll)
+            {
+                printf("Delete This Record(Y/N) : ");
+                scanf(" %c",&choice);
 
-        while (temp != NULL) {
-            if (strcmp(temp->name, name) == 0) {
-                found = 1;
-                printf("Record Found: Roll=%d, Name=%s, Percentage=%.2f\n",
-                       temp->roll, temp->name, temp->percentage);
-                printf("Do you really want to delete? (Y/N): ");
-                scanf(" %c", &choice);
+                if(choice=='Y' || choice=='y')
+                {
+                    if(prev==NULL)
+                        *hptr=temp->next;
+                    else
+                        prev->next=temp->next;
 
-                if (choice == 'Y' || choice == 'y') {
-                    if (prev == NULL) {
-                        *hptr = temp->next;
-                    } else {
-                        prev->next = temp->next;
-                    }
                     free(temp);
-                    printf("Record deleted successfully!\n");
-                    return;
-                } else {
-                    printf("Deletion cancelled.\n");
-                    return;
+
+                    printf("Record Deleted Successfully...\n");
                 }
+
+                return;
             }
-            prev = temp;
-            temp = temp->next;
+
+            prev=temp;
+            temp=temp->next;
         }
 
-        if (!found) {
-            printf("No record found with name %s\n", name);
-        }
+        printf("Roll Number Not Found...\n");
     }
-    else if (choice == 'B' || choice == 'b') {
-        printf("Returning to main menu...\n");
+
+    else if(choice=='B' || choice=='b')
+    {
         return;
     }
-    else {
-        printf("Invalid choice!\n");
+
+    else
+    {
+        printf("Invalid Choice...\n");
     }
 }
-
