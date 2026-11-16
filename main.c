@@ -1,10 +1,13 @@
 #include "student.h"
-
-int main() {
-    ST *hptr = NULL;   // head pointer initially pointing to NULL
+int id = 100;
+int main()
+{
+    ST *hptr = NULL;//Head pointer initially points to NULL
     char choice;
-    //Menu options
-    do {
+    /* Load old records from file */
+    stud_load(&hptr);
+    do
+    {
         printf("\n====================================\n");
         printf("       STUDENT MANAGEMENT SYSTEM\n");
         printf("====================================\n");
@@ -18,65 +21,85 @@ int main() {
         printf("|   T/t    |  Sort Records          |\n");
         printf("|   E/e    |  Exit                  |\n");
         printf("====================================\n");
-        printf("Enter Your Choice: ");
-        scanf(" %c", &choice);
 
-        switch (choice) {
-            case 'A': case 'a':
+        printf("Enter Your Choice : ");
+        scanf(" %c",&choice);
+
+        switch(choice)
+        {
+            case 'A':
+            case 'a':
                 stud_add(&hptr);
                 break;
 
-            case 'D': case 'd':
+            case 'D':
+            case 'd':
                 stud_del(&hptr);
                 break;
 
-            case 'S': case 's':
+            case 'S':
+            case 's':
                 stud_show(hptr);
                 break;
 
-            case 'M': case 'm':
+            case 'M':
+            case 'm':
                 stud_mod(hptr);
                 break;
 
-            case 'V': case 'v':
+            case 'V':
+            case 'v':
                 stud_save(hptr);
+                printf("Records Saved Successfully...\n");
                 break;
 
-            case 'T': case 't':
+            case 'T':
+            case 't':
                 stud_sort(hptr);
                 break;
 
-            case 'E': case 'e':
+            case 'E':
+            case 'e':
+
                 printf("\n=============================\n");
-                printf("          EXIT MENU\n");
+                printf("         EXIT MENU\n");
                 printf("=============================\n");
                 printf("S/s : Save and Exit\n");
                 printf("E/e : Exit Without Saving\n");
-                printf("B/b : Back to Main Menu\n");
+                printf("B/b : Back To Main Menu\n");
                 printf("=============================\n");
-                printf("Enter Your Choice: ");
-                scanf(" %c", &choice);
 
-                if (choice == 'S' || choice == 's') {
+                printf("Enter Your Choice : ");
+                scanf(" %c",&choice);
+
+                if(choice=='S' || choice=='s')
+                {
                     stud_save(hptr);
-                    printf("Records saved. Exiting program...\n");
+                    printf("Records Saved Successfully...\n");
+                    printf("Exiting Program...\n");
                     return 0;
-                } else if (choice == 'E' || choice == 'e') {
-                    printf("Exiting without saving...\n");
-                    return 0;
-                } else if (choice == 'B' || choice == 'b') {
-                    printf("Returning to main menu...\n");
-                    break;
-                } else {
-                    printf("Invalid choice! Returning to main menu...\n");
                 }
+                else if(choice=='E' || choice=='e')
+                {
+                    printf("Exiting Without Saving...\n");
+                    return 0;
+                }
+                else if(choice=='B' || choice=='b')
+                {
+                    printf("Returning To Main Menu...\n");
+                }
+                else
+                {
+                    printf("Invalid Choice...\n");
+                }
+
                 break;
 
             default:
-                printf("Invalid choice!\n");
+                printf("Invalid Choice...\n");
         }
-    } while (1);
+
+    }while(1);
 
     return 0;
 }
-
