@@ -1,23 +1,32 @@
 #include "student.h"
 
-void stud_show(ST *hptr) {
-    if (hptr == NULL) {
-        printf("No records in the list...\n");
+void stud_show(ST *hptr)
+{
+    if(hptr == NULL)
+    {
+        printf("No Records Available...\n");
         return;
     }
 
-    printf("\n====================================\n");
-    printf("        STUDENT RECORDS LIST\n");
-    printf("====================================\n");
-    printf("| Roll No |     Name     | Percentage |\n");
-    printf("--------------------------------------\n");
+    printf("\n");
 
-    while (hptr != NULL) {
-        printf("| %-7d | %-10s | %-9.2f |\n",
-               hptr->roll, hptr->name, hptr->percentage);
+    printf("=========================================================\n");
+    printf("%-10s %-20s %-15s\n",
+           "Roll No",
+           "Name",
+           "Percentage");
+
+    printf("=========================================================\n");
+
+    while(hptr)
+    {
+        printf("%-10d %-20s %-15.2f\n",
+               hptr->roll,
+               hptr->name,
+               hptr->percentage);
+
         hptr = hptr->next;
     }
 
-    printf("--------------------------------------\n");
+    printf("=========================================================\n");
 }
-
